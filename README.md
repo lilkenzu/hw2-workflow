@@ -23,6 +23,11 @@ workflow одной командой. Три зоны ответственнос
 - **`REPORT.md`** — мета-отчёт по каждому пункту чек-листа ДЗ №2.
 - **Замер последовательно/параллельно** —
   [`materials/measurement-sequential-run.md`](materials/measurement-sequential-run.md).
+- **Проверка на секреты — проведена, результат чистый.** Расширенная
+  проверка по 8 направлениям (ключи/токены/пароли, файлы-кандидаты, история
+  команд, вся история git, метаданные и бинарное содержимое PDF, сырые
+  данные API) — ничего не найдено. Сырой вывод команд —
+  [`sessions/evidence.md`](sessions/evidence.md).
 
 ## Как запустить workflow
 
@@ -55,7 +60,7 @@ chmod +x run_report.sh
 ```
 README.md                    — этот файл
 REPORT-cbr-rates.md          — итоговый отчёт для руководителя
-sessions/                    — журнал работы (STATE.md, TOOLS.md, session-1.md)
+sessions/                    — журнал работы (STATE.md, TOOLS.md, session-1.md, evidence.md)
 materials/
   audit-findings.md          — находки аудита данных (зона 1)
   risk-assessment.md         — оценка бизнес-риска (зона 2, субагент)
