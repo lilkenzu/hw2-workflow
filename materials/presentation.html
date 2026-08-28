@@ -164,6 +164,16 @@
   .next-list li { font-size: 27px; font-weight: 600; padding: var(--sp-2) 0; border-bottom: 1px solid var(--line); display: flex; gap: var(--sp-2); align-items: baseline; }
   .next-list li:last-child { border-bottom: none; }
   .next-list .idx { color: var(--accent); font-size: 21px; font-weight: 800; min-width: 40px; font-variant-numeric: tabular-nums; }
+
+  .done-list, .todo-list { list-style: none; margin-top: var(--sp-1); }
+  .done-list li, .todo-list li {
+    font-size: 17px; font-weight: 600; line-height: 1.35;
+    padding: var(--sp-1) 0 var(--sp-1) var(--sp-4); position: relative; border-bottom: 1px solid var(--line);
+  }
+  .done-list li:last-child, .todo-list li:last-child { border-bottom: none; }
+  .done-list li::before { content: "✓"; position: absolute; left: 0; top: var(--sp-1); color: var(--accent); font-weight: 800; }
+  .todo-list li { color: var(--ink-soft); font-weight: 500; }
+  .todo-list li::before { content: "—"; position: absolute; left: 2px; top: var(--sp-1); color: var(--ink-soft); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -385,19 +395,34 @@
   <div class="footer"><span class="brand">hw2-workflow</span><span>10 / 11</span></div>
 </section>
 
-<!-- 11. NEXT -->
+<!-- 11. STATUS -->
 <section class="slide" data-n="11">
   <div class="accent-bar"></div>
-  <div class="eyebrow">Что дальше</div>
-  <h1>Открытые пункты<br>перед сдачей</h1>
+  <div class="eyebrow">Статус · итог</div>
+  <h1>Сдано —<br><span class="accent">B1 единственная тема</span></h1>
   <div class="body">
-    <ul class="next-list">
-      <li><span class="idx">01</span> Написать README.md — что сделано и как запустить</li>
-      <li><span class="idx">02</span> Первый коммит и push в GitHub</li>
-      <li><span class="idx">03</span> Проверить репозиторий на секреты перед сдачей</li>
-      <li><span class="idx">04</span> Поставить run_report.sh --last-month в cron</li>
-      <li><span class="idx">05</span> Решить, остаётся ли B1 единственной темой ДЗ №2</li>
-    </ul>
+    <div class="two-col">
+      <div>
+        <div class="col-title">Готово</div>
+        <ul class="done-list">
+          <li>README.md — структура, запуск, ссылки</li>
+          <li>Коммит и push — публично доступен</li>
+          <li>REPORT.md — по каждому пункту ДЗ №2</li>
+          <li>PDF-отчёт — report-cbr-rates.pdf</li>
+          <li>Замер последовательно / параллельно</li>
+          <li>Секреты проверены дважды — чисто</li>
+        </ul>
+      </div>
+      <div>
+        <div class="col-title">В плюс, по желанию</div>
+        <ul class="todo-list">
+          <li>run_report.sh --last-month в cron</li>
+          <li>Git worktrees</li>
+          <li>Изоляция с доказательством отказа</li>
+          <li>Инъекция на двух моделях</li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="footer"><span class="brand">hw2-workflow</span><span>11 / 11</span></div>
 </section>
