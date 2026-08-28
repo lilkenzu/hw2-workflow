@@ -11,13 +11,18 @@ workflow одной командой. Три зоны ответственнос
 
 ## Что сделано
 
-- **Отчёт для руководителя** — [`REPORT-cbr-rates.md`](REPORT-cbr-rates.md):
-  что случилось (аудит) → где проблемы (риски) → что делать (fix + workflow).
+- **Отчёт для руководителя** — [`REPORT-cbr-rates.md`](REPORT-cbr-rates.md)
+  и его PDF-версия [`materials/report-cbr-rates.pdf`](materials/report-cbr-rates.pdf)
+  (5 страниц, титул + оглавление + резюме): что случилось (аудит) → где
+  проблемы (риски) → что делать (fix + workflow).
 - **Презентация** (11 слайдов, 16:9, PDF) —
   [`materials/presentation.pdf`](materials/presentation.pdf).
 - **Workflow одной командой** — [`workflow/`](workflow), см. ниже «Как запустить».
 - **Журнал сессии** — [`sessions/`](sessions): промпты дословно, решения,
   найденные и исправленные баги.
+- **`REPORT.md`** — мета-отчёт по каждому пункту чек-листа ДЗ №2.
+- **Замер последовательно/параллельно** —
+  [`materials/measurement-sequential-run.md`](materials/measurement-sequential-run.md).
 
 ## Как запустить workflow
 
