@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Курсы валют ЦБ РФ — презентация</title>
+<style>
+  /* Swiss anchor (frontend-design skill): pure white surface, one sans family,
+     Yves Klein Blue accent, visible grid, left-aligned asymmetric structure,
+     numerals as composition elements. Spacing runs on an 8px baseline unit —
+     every margin/padding below is a multiple of --u, not a chosen-by-eye value. */
+  :root {
+    --accent: #002FA7;      /* Yves Klein Blue — exact Swiss token, not an arbitrary blue */
+    --accent-light: #eef1fb;
+    --ink: #0A0A0A;
+    --ink-soft: #55575c;
+    --line: #d8dade;
+    --bg: #ffffff;
+    --mono: 'SF Mono', 'Menlo', 'Consolas', monospace;
+    --sans: -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --u: 8px;                /* baseline grid unit */
+    --sp-1: calc(var(--u) * 1);   /*  8px */
+    --sp-2: calc(var(--u) * 2);   /* 16px */
+    --sp-3: calc(var(--u) * 3);   /* 24px */
+    --sp-4: calc(var(--u) * 4);   /* 32px */
+    --sp-5: calc(var(--u) * 6);   /* 48px */
+    --sp-6: calc(var(--u) * 8);   /* 64px */
+    --sp-7: calc(var(--u) * 12);  /* 96px — outer margin */
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d9dce1; }
+  body { font-family: var(--sans); color: var(--ink); }
+
+  @page { size: 1280px 720px; margin: 0; }
+  @media print {
+    html, body { background: #fff; }
+    .slide { break-after: page; box-shadow: none !important; margin: 0 !important; }
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    /* Visible 12-column grid — Swiss token "visible grid lines" made literal,
+       not implied. Painted as the element's OWN background (not a z-index:-1
+       pseudo-element — that trap sits behind the slide's opaque background
+       and silently disappears; found by rendering the PDF, not by eye). */
+    background-color: var(--bg);
+    background-image: repeating-linear-gradient(
+      to right, rgba(10,10,10,.07) 0, rgba(10,10,10,.07) 1px,
+      transparent 1px, transparent calc(100% / 12)
+    );
+    position: relative;
+    overflow: hidden;
+    margin: 24px auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,.15);
+    padding: var(--sp-7) var(--sp-7) var(--sp-6) var(--sp-7);
+    display: flex;
+    flex-direction: column;
+  }
+  /* Folio number — numeral as a composition element, not a caption */
+  .slide::before {
+    content: attr(data-n);
+    position: absolute; top: var(--sp-4); right: var(--sp-7);
+    font-size: 20px; font-weight: 700; color: var(--ink-soft);
+    font-variant-numeric: tabular-nums; letter-spacing: .02em;
+  }
+
+  .eyebrow {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--sp-2);
+  }
+  h1 { font-size: 54px; font-weight: 800; line-height: 1.1; letter-spacing: -.01em; }
+  h1 .accent { color: var(--accent); }
+  .subtitle { font-size: 24px; color: var(--ink-soft); margin-top: var(--sp-3); font-weight: 500; }
+
+  .footer {
+    position: absolute;
+    left: var(--sp-7); right: var(--sp-7); bottom: var(--sp-3);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 15px; color: #9aa1ac;
+    border-top: 1px solid var(--line);
+    padding-top: var(--sp-2);
+  }
+  .footer .brand { font-weight: 700; color: var(--ink-soft); letter-spacing: .04em; text-transform: uppercase; font-size: 13px; }
+  .accent-bar { position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: var(--accent); }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: var(--sp-3); }
+
+  ul.thesis { list-style: none; }
+  ul.thesis li {
+    font-size: 29px; font-weight: 600; line-height: 1.35;
+    padding-left: var(--sp-5); position: relative; margin-bottom: var(--sp-3);
+    color: var(--ink);
+  }
+  ul.thesis li::before {
+    content: ""; position: absolute; left: 0; top: 13px;
+    width: 24px; height: 3px; background: var(--accent);
+  }
+  ul.thesis li .dim { font-weight: 400; color: var(--ink-soft); font-size: 22px; display: block; margin-top: var(--sp-1); }
+
+  .stat-row { display: flex; gap: var(--sp-5); margin-top: var(--sp-1); }
+  .stat { flex: 1; border-left: 1px solid var(--line); padding-left: var(--sp-3); }
+  .stat .num { font-size: 92px; font-weight: 800; color: var(--accent); line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stat .num.neg { color: #b91c1c; }
+  .stat .label { font-size: 21px; font-weight: 600; margin-top: var(--sp-2); color: var(--ink); }
+  .stat .sub { font-size: 17px; color: var(--ink-soft); margin-top: var(--sp-1); }
+
+  table.grid-table { width: 100%; border-collapse: collapse; font-size: 21px; margin-top: var(--sp-2); }
+  table.grid-table th {
+    text-align: left; font-size: 16px; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--ink-soft); border-bottom: 1px solid var(--ink); padding: 0 var(--sp-2) var(--sp-2) 0;
+  }
+  table.grid-table td { padding: var(--sp-2) var(--sp-2) var(--sp-2) 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.grid-table tr:last-child td { border-bottom: none; }
+  /* Swiss token: no soft pill badges — bracketed labels on a hairline, colour carries meaning */
+  .tag { display: inline-block; font-family: var(--mono); font-size: 14px; font-weight: 700;
+    letter-spacing: .03em; padding-left: var(--sp-2); border-left: 3px solid; text-transform: uppercase; }
+  .tag.high { border-color: #b91c1c; color: #b91c1c; }
+  .tag.mid  { border-color: #92400e; color: #92400e; }
+  .tag.low  { border-color: #166534; color: #166534; }
+
+  .code-block {
+    background: #0A0A0A; color: #e2e8f0; font-family: var(--mono); font-size: 22px;
+    padding: var(--sp-3) var(--sp-4); margin-top: var(--sp-2); line-height: 1.7;
+    border-left: 3px solid var(--accent);
+  }
+  .code-block .muted { color: #7a7d84; }
+  .code-block .green { color: #4ade80; }
+
+  .two-col { display: flex; gap: var(--sp-6); margin-top: var(--sp-1); }
+  .two-col > div { flex: 1; }
+  .col-title { font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: var(--sp-2); text-transform: uppercase; letter-spacing: .06em; }
+
+  .pipeline { display: flex; align-items: stretch; gap: 0; margin-top: var(--sp-3); }
+  .pipe-step { flex: 1; background: #fff; border: 1px solid var(--ink); border-top: 3px solid var(--accent); padding: var(--sp-3) var(--sp-2); text-align: left; }
+  .pipe-step .n { font-size: 15px; font-weight: 700; color: var(--accent); letter-spacing: .06em; text-transform: uppercase; }
+  .pipe-step .t { font-size: 23px; font-weight: 700; margin-top: var(--sp-1); }
+  .pipe-step .d { font-size: 15px; color: var(--ink-soft); margin-top: var(--sp-1); }
+  .pipe-arrow { font-size: 28px; color: var(--ink-soft); padding: 0 var(--sp-2); font-weight: 300; align-self: center; }
+
+  .title-slide { justify-content: center; align-items: flex-start; }
+  .title-slide .kicker { font-size: 22px; font-weight: 700; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
+  .title-slide h1 { font-size: 68px; margin-top: var(--sp-3); }
+  .title-slide .meta { margin-top: var(--sp-5); font-size: 21px; color: var(--ink-soft); display: flex; gap: var(--sp-5); }
+  .title-slide .meta div { border-left: 1px solid var(--ink); padding-left: var(--sp-2); }
+  .title-slide .meta b { display: block; color: var(--ink); font-size: 23px; font-variant-numeric: tabular-nums; }
+
+  .big-quote { font-size: 40px; font-weight: 700; line-height: 1.4; color: var(--ink); }
+  .big-quote .accent { color: var(--accent); }
+
+  .checklist { list-style: none; margin-top: var(--sp-1); }
+  .checklist li { font-size: 27px; font-weight: 600; padding: var(--sp-2) 0 var(--sp-2) var(--sp-5); position: relative; border-bottom: 1px solid var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: "→"; position: absolute; left: 0; top: 13px;
+    color: var(--accent); font-weight: 800; font-size: 26px;
+  }
+  .checklist li .dim { font-weight: 400; color: var(--ink-soft); font-size: 20px; display: block; margin-top: var(--sp-1); }
+
+  .next-list { list-style: none; margin-top: var(--sp-1); }
+  .next-list li { font-size: 27px; font-weight: 600; padding: var(--sp-2) 0; border-bottom: 1px solid var(--line); display: flex; gap: var(--sp-2); align-items: baseline; }
+  .next-list li:last-child { border-bottom: none; }
+  .next-list .idx { color: var(--accent); font-size: 21px; font-weight: 800; min-width: 40px; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<!-- 1. TITLE -->
+<section class="slide title-slide" data-n="01">
+  <div class="accent-bar"></div>
+  <div class="kicker">Отчёт · ДЗ №2 · вариант B1</div>
+  <h1>Курсы валют ЦБ РФ:<br>аудит, риски, <span class="accent">автоматизация</span></h1>
+  <div class="subtitle">Сбор, проверка и сверка данных без ключей и регистрации</div>
+  <div class="meta">
+    <div><b>28.08.2026</b>Дата</div>
+    <div><b>USD · EUR · CNY</b>Валюты</div>
+    <div><b>29.07–28.08.2026</b>Период, 23 дня</div>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>1 / 11</span></div>
+</section>
+
+<!-- 2. PROBLEM -->
+<section class="slide" data-n="02">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Проблема</div>
+  <h1>Сырые данные ЦБ не готовы<br>для бизнес-процессов <span class="accent">напрямую</span></h1>
+  <div class="body">
+    <ul class="thesis">
+      <li>Открытый API ЦБ отдаёт XML в нестандартном формате — без обработки он молча ломает парсер или искажает курс
+        <span class="dim">кодировка, десятичный разделитель, номинал валюты</span></li>
+      <li>Ошибка в курсе на одну дату — это ошибка в переоценке активов, биллинге, кассовых разрывах
+        <span class="dim">данные ЦБ используются как есть, без проверки на входе</span></li>
+      <li>Нужен не разовый просмотр, а повторяемая проверка перед тем, как данные попадут в отчётность</li>
+    </ul>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>2 / 11</span></div>
+</section>
+
+<!-- 3. APPROACH -->
+<section class="slide" data-n="03">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Что сделали · подход</div>
+  <h1>Три зоны ответственности,<br><span class="accent">два настоящих субагента</span></h1>
+  <div class="body">
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="n">Зона 1</div>
+        <div class="t">Аудитор данных</div>
+        <div class="d">«Что случилось» — только факты</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="n">Зона 2 · субагент</div>
+        <div class="t">Риск-менеджер</div>
+        <div class="d">«Где проблемы» — влияние на бизнес</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="n">Зона 3 · субагент</div>
+        <div class="t">Инженер процессов</div>
+        <div class="d">«Что делать» — fix и автоматизация</div>
+      </div>
+    </div>
+    <ul class="thesis" style="margin-top:44px">
+      <li>Риск-менеджер и Инженер процессов работали <span class="accent">параллельно и независимо</span> — не эмуляция одной моделью в скрытом рассуждении, а реальный запуск двух субагентов</li>
+    </ul>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>3 / 11</span></div>
+</section>
+
+<!-- 4. DATA SOURCE -->
+<section class="slide" data-n="04">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Что сделали · данные</div>
+  <h1>Реальные данные,<br><span class="accent">не синтетика</span></h1>
+  <div class="body">
+    <div class="two-col">
+      <div>
+        <div class="col-title">Основной источник</div>
+        <div class="code-block">
+          cbr.ru/scripts/<span class="green">XML_dynamic.asp</span><br>
+          <span class="muted">без ключей и регистрации</span><br><br>
+          USD · EUR · CNY<br>
+          29.07.2026 – 28.08.2026
+        </div>
+      </div>
+      <div>
+        <div class="col-title">Сверка независимым источником</div>
+        <div class="code-block">
+          <span class="green">open.er-api.com</span>/v6/latest/USD<br>
+          <span class="muted">без ключа</span><br><br>
+          USD/RUB — напрямую<br>
+          EUR, CNY — через кросс-курс
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>4 / 11</span></div>
+</section>
+
+<!-- 5. VERIFICATION -->
+<section class="slide" data-n="05">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Как проверяли</div>
+  <h1>Не поверили отчёту субагента —<br><span class="accent">перепроверили запуском</span></h1>
+  <div class="body">
+    <ul class="checklist">
+      <li>Инженер процессов заявил «скрипт проверен» — на деле это была только синтаксическая проверка
+        <span class="dim">py_compile, не реальный запуск</span></li>
+      <li>Реальный прогон на живых данных нашёл баг: код возврата <b>2</b> терялся и не доходил до cron-алерта
+        <span class="dim">отсутствовал exit после case в run_report.sh</span></li>
+      <li>Баг исправлен, повторный прогон подтвердил: результат идентичен ручному анализу</li>
+    </ul>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>5 / 11</span></div>
+</section>
+
+<!-- 6. RESULT: GAPS -->
+<section class="slide" data-n="06">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Что получилось · пропуски</div>
+  <h1>Пропуски объяснены —<br><span class="accent">это не сбой данных</span></h1>
+  <div class="body">
+    <div class="stat-row">
+      <div class="stat">
+        <div class="num">0</div>
+        <div class="label">дубликатов дат</div>
+        <div class="sub">ни по одной из 3 валют</div>
+      </div>
+      <div class="stat">
+        <div class="num">4 / 23</div>
+        <div class="label">пропущенных будних дат</div>
+        <div class="sub">все — понедельники, после пятничного курса</div>
+      </div>
+      <div class="stat">
+        <div class="num">0</div>
+        <div class="label">необъяснённых пропусков</div>
+        <div class="sub">курс ЦБ действует пт → вс → пн включительно</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>6 / 11</span></div>
+</section>
+
+<!-- 7. RESULT: ANOMALIES -->
+<section class="slide" data-n="07">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Что получилось · аномалии</div>
+  <h1>Два дня с движением<br>курса <span class="accent">выше 2%</span></h1>
+  <div class="body">
+    <div class="stat-row">
+      <div class="stat">
+        <div class="num neg">−2.08%</div>
+        <div class="label">USD, 20 → 21 августа</div>
+        <div class="sub">85.13 → 83.36 ₽</div>
+      </div>
+      <div class="stat">
+        <div class="num">+2.05%</div>
+        <div class="label">EUR, 27 → 28 августа</div>
+        <div class="sub">98.29 → 100.30 ₽ · последний день периода</div>
+      </div>
+      <div class="stat">
+        <div class="num">≤0.25%</div>
+        <div class="label">расхождение со 2-м источником</div>
+        <div class="sub">диапазон 0.10–0.25% · норма методологии фиксинга</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>7 / 11</span></div>
+</section>
+
+<!-- 8. RESULT: RISKS -->
+<section class="slide" data-n="08">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Что получилось · риски</div>
+  <h1>Риск — не в данных ЦБ,<br>а в <span class="accent">наивном парсинге</span></h1>
+  <div class="body">
+    <table class="grid-table">
+      <tr><th>Приоритет</th><th>Находка</th><th>Затронутые процессы</th></tr>
+      <tr><td><span class="tag high">высокий</span></td><td>Запятая как разделитель</td><td>Биллинг, переоценка активов, кассовые разрывы</td></tr>
+      <tr><td><span class="tag high">высокий</span></td><td>Скачки курса &gt;2%</td><td>Биллинг «по вчерашнему курсу»</td></tr>
+      <tr><td><span class="tag mid">средний</span></td><td>Кодировка + номинал валюты</td><td>Эскалирует при расширении списка валют</td></tr>
+      <tr><td><span class="tag low">низкий</span></td><td>Пропуски по понедельникам</td><td>Только ложные алерты наивного мониторинга</td></tr>
+    </table>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>8 / 11</span></div>
+</section>
+
+<!-- 9. RESULT: WORKFLOW -->
+<section class="slide" data-n="09">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Что получилось · workflow</div>
+  <h1>Весь отчёт —<br><span class="accent">одна команда</span></h1>
+  <div class="body">
+    <div class="code-block">
+      <span class="muted"># произвольный период</span><br>
+      ./run_report.sh 29.07.2026 28.08.2026<br><br>
+      <span class="muted"># регулярный прогон, прошлый месяц</span><br>
+      ./run_report.sh <span class="green">--last-month</span>
+    </div>
+    <ul class="thesis" style="margin-top:var(--sp-3)">
+      <li>Коды возврата готовы для cron: <span class="accent">0</span> — тишина, <span class="accent">2</span> — есть находки, приложить отчёт, иначе — сбой пайплайна</li>
+    </ul>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>9 / 11</span></div>
+</section>
+
+<!-- 10. CONCLUSIONS -->
+<section class="slide" data-n="10">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Выводы</div>
+  <div class="body">
+    <div class="big-quote">
+      Данные ЦБ <span class="accent">корректны и непротиворечивы</span>.<br>
+      Реальный риск — в том, как их <span class="accent">читают</span>, а не в том, что они отдают.
+    </div>
+    <ul class="thesis" style="margin-top:48px">
+      <li>Три точки отказа парсера — кодировка, разделитель, номинал — устранены системно, не «на память оператора»</li>
+      <li>Два дня волатильности (>2%) реальны и требуют внимания процессов, использующих вчерашний курс</li>
+    </ul>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>10 / 11</span></div>
+</section>
+
+<!-- 11. NEXT -->
+<section class="slide" data-n="11">
+  <div class="accent-bar"></div>
+  <div class="eyebrow">Что дальше</div>
+  <h1>Открытые пункты<br>перед сдачей</h1>
+  <div class="body">
+    <ul class="next-list">
+      <li><span class="idx">01</span> Написать README.md — что сделано и как запустить</li>
+      <li><span class="idx">02</span> Первый коммит и push в GitHub</li>
+      <li><span class="idx">03</span> Проверить репозиторий на секреты перед сдачей</li>
+      <li><span class="idx">04</span> Поставить run_report.sh --last-month в cron</li>
+      <li><span class="idx">05</span> Решить, остаётся ли B1 единственной темой ДЗ №2</li>
+    </ul>
+  </div>
+  <div class="footer"><span class="brand">hw2-workflow</span><span>11 / 11</span></div>
+</section>
+
+</body>
+</html>
